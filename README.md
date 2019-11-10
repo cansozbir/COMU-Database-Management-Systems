@@ -147,3 +147,35 @@
     select fname
     from employee
     where ssn in ( select mgrssn from department) and ssn in ( select essn from dependent)
+
+
+## Exercises 6.16.a
+##### Retrieve the names of all employees in department 5 who work more than 10 hours per week on the ProductX project.
+
+    select distinct fname
+    from employee e, works_on wo, project p
+    where e.ssn = wo.essn and wo.pno = p.pnumber  and e.dno = 5 and p.pname="ProductX" and wo.hours>10
+
+
+## Exercises 6.16.b
+##### List the names of all employees who have a dependent with the same first name as themselves.
+
+    select e.fname
+    from employee e, dependent d
+    where e.ssn = d.essn and e.fname = d.dependent_name
+
+
+## Exercises 6.16.c
+##### Find the names of all employees who are directly supervised by ‘Franklin Wong’.
+
+    select distinct e.fname 
+    from employee e, employee s
+    where e.superssn = s.ssn and s.fname = "Franklin" and s.lname = "Wong";
+
+
+## Exercises 6.16.c
+##### Find the names of all employees who are directly supervised by ‘Franklin Wong’.
+
+select distinct e.fname 
+from employee e, employee s
+where e.superssn = s.ssn and s.fname = "Franklin" and s.lname = "Wong";
