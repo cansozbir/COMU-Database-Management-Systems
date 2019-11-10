@@ -1,6 +1,6 @@
 # COMU-Database-Management-Systems
 
-## exercise 5.5.a
+## Exercise 5.5.a
 ##### For each department whose average employee salary is more than $30,000, retrieve the department name and the number of employees working for that department.
 
     select d.dname, count(fname)
@@ -8,7 +8,7 @@
     where d.dnumber = e.dno and (select avg(salary) from employee where dno = d.dnumber ) > 30000
     group by d.dname
 
-## exercise 5.5.b
+## Exercise 5.5.b
 ##### Suppose that we want the number of male employees in each department making more than $30,000, rather than all employees (as in Exercise 5.4a). Can we specify this query in SQL? Why or why not?
 
     select d.dname, count(*)
@@ -18,7 +18,7 @@
 
 
 
-## exercise 5.7.a
+## Exercise 5.7.a
 ##### Retrieve the names of all employees who work in the department that has the employee with the highest salary among all employees.
 
     select e.fname
@@ -29,7 +29,7 @@
                     limit 1 )
 
 
-## exercise 5.7.b
+## Exercise 5.7.b
 ##### Retrieve the names of all employees whose supervisor’s supervisor has ‘888665555’ for Ssn .
 
     select e.fname
@@ -37,7 +37,7 @@
     where e.superssn= e2.ssn and e2.superssn = "888665555"
 
 
-## exercise 5.7.c
+## Exercise 5.7.c
 ##### Retrieve the names of employees who make at least $10,000 more than the employee who is paid the least in the company.
 
     select *
@@ -149,7 +149,7 @@
     where ssn in ( select mgrssn from department) and ssn in ( select essn from dependent)
 
 
-## Exercises 6.16.a
+## Exercise 6.16.a
 ##### Retrieve the names of all employees in department 5 who work more than 10 hours per week on the ProductX project.
 
     select distinct fname
@@ -157,7 +157,7 @@
     where e.ssn = wo.essn and wo.pno = p.pnumber  and e.dno = 5 and p.pname="ProductX" and wo.hours>10
 
 
-## Exercises 6.16.b
+## Exercise 6.16.b
 ##### List the names of all employees who have a dependent with the same first name as themselves.
 
     select e.fname
@@ -165,7 +165,7 @@
     where e.ssn = d.essn and e.fname = d.dependent_name
 
 
-## Exercises 6.16.c
+## Exercise 6.16.c
 ##### Find the names of all employees who are directly supervised by ‘Franklin Wong’.
 
     select distinct e.fname 
@@ -173,9 +173,9 @@
     where e.superssn = s.ssn and s.fname = "Franklin" and s.lname = "Wong";
 
 
-## Exercises 6.16.c
+## Exercise 6.16.c
 ##### Find the names of all employees who are directly supervised by ‘Franklin Wong’.
 
-select distinct e.fname 
-from employee e, employee s
-where e.superssn = s.ssn and s.fname = "Franklin" and s.lname = "Wong";
+    select distinct e.fname 
+    from employee e, employee s
+    where e.superssn = s.ssn and s.fname = "Franklin" and s.lname = "Wong";
