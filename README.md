@@ -109,7 +109,7 @@
 
     select e.fname
     from employee e
-    where not exists (	select p.pnumber
+    where not exists (  select p.pnumber
                         from project p
                         where p.dnum = 5
                         
@@ -195,10 +195,6 @@
 
 ##### 1.b) Calisanin ismi ve department mudurunun isimlerini listeleyen sorguyu hem sql hem cebir ile yaziniz.
 
-    select joined.fname as calisan, e2.fname as mudur
-    from (select * from employee, department where dno=dnumber) as joined, employee as  e2
-    where joined.mgrssn = e2.ssn and joined.ssn != e2.ssn;
-
 
     select e1.fname as calisan, e2.fname as mudur
     from employee e1, employee e2, department d
@@ -208,9 +204,9 @@
 ##### 1.c Bolum ismi, calisan sayisi ve ortalama ucreti listeleyen sql sorgusunu yaziniz.
 
     select d.dname, count(*), avg(e.salary)
-    from employee e, department d, project p, works_on wo
-    where e.dno = d.dnumber and p.dnum = d.dnumber and p.pnumber = wo.pno and e.ssn=wo.essn 
-    group by d.dname
+    from department d, employee e
+    where d.dnumber = e.dno
+    group by d.dname;
 
 ##### CHANGELOG
 - updated : Exercise 5.7.c
