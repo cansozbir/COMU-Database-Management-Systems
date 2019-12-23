@@ -40,9 +40,15 @@
 ## Exercise 5.7.c
 ##### Retrieve the names of employees who make at least $10,000 more than the employee who is paid the least in the company.
 
-    select *
+    select e.fname
     from employee e
-    where e.salary > (select min(salary) from employee) + 10000
+    where e.salary - 10000 >=   (
+                                select e2.salary
+                                from employee e2
+                                where e2.dno = e.dno
+                                order by e2.salary asc
+                                limit 1
+                                )
 
 
 ## Exercise 5.8.a
@@ -179,3 +185,32 @@
     select distinct e.fname 
     from employee e, employee s
     where e.superssn = s.ssn and s.fname = "Franklin" and s.lname = "Wong";
+
+# Çıkmış Sınav Soruları
+## 2018-2019 Bahar 
+##### 1. Asagidaki sorulara ders kitabindaki company veritabani uzerinden cevap veriniz.
+
+##### 1.a) 3.Normal formda olan bir tabloyu 2.normal forma donusturunuz. (alan ekleme cikarma)
+
+
+##### 1.b) Calisanin ismi ve department mudurunun isimlerini listeleyen sorguyu hem sql hem cebir ile yaziniz.
+
+    select joined.fname as calisan, e2.fname as mudur
+    from (select * from employee, department where dno=dnumber) as joined, employee as  e2
+    where joined.mgrssn = e2.ssn and joined.ssn != e2.ssn;
+
+
+    select e1.fname as calisan, e2.fname as mudur
+    from employee e1, employee e2, department d
+    where e1.dno = d.dnumber and e2.ssn = d.mgrssn and e1.ssn != e2.ssn;
+
+
+##### 1.c Bolum ismi, calisan sayisi ve ortalama ucreti listeleyen sql sorgusunu yaziniz.
+
+    select d.dname, count(*), avg(e.salary)
+    from employee e, department d, project p, works_on wo
+    where e.dno = d.dnumber and p.dnum = d.dnumber and p.pnumber = wo.pno and e.ssn=wo.essn 
+    group by d.dname
+
+##### CHANGELOG
+- updated : Exercise 5.7.c
